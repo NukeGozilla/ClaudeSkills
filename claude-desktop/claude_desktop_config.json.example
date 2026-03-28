@@ -13,15 +13,33 @@
       "command": "npx",
       "args": ["-y", "@roychri/mcp-server-asana"],
       "env": {
-        "ASANA_ACCESS_TOKEN": "<YOUR_ASANA_ZTOR_TOKEN>"
+        "ASANA_ACCESS_TOKEN": "${ASANA_ZTOR_PAT}"
       }
     },
     "asana-beamco": {
       "command": "npx",
       "args": ["-y", "@roychri/mcp-server-asana"],
       "env": {
-        "ASANA_ACCESS_TOKEN": "<YOUR_ASANA_BEAMCO_TOKEN>"
+        "ASANA_ACCESS_TOKEN": "${ASANA_BEAMCO_PAT}"
       }
+    },
+    "notion-personal": {
+      "command": "npx",
+      "args": ["-y", "@notionhq/notion-mcp-server"],
+      "env": {
+        "NOTION_TOKEN": "${NOTION_PERSONAL_TOKEN}"
+      }
+    },
+    "notion-sports": {
+      "command": "npx",
+      "args": ["-y", "@notionhq/notion-mcp-server"],
+      "env": {
+        "NOTION_TOKEN": "${NOTION_SPORTS_TOKEN}"
+      }
+    },
+    "linear": {
+      "type": "http",
+      "url": "https://mcp.linear.app/mcp"
     }
   }
 }
