@@ -1,0 +1,8 @@
+# Credentials -- never commit
+.credentials.json
+*secrets*.json
+*.local.json
+
+# OS noise
+.DS_Store
+Thumbs.db

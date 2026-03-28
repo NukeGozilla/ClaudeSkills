@@ -1,0 +1,27 @@
+{
+  "preferences": {
+    "coworkScheduledTasksEnabled": true,
+    "ccdScheduledTasksEnabled": true,
+    "sidebarMode": "task",
+    "bypassPermissionsModeEnabled": true,
+    "dockBounceEnabled": true,
+    "coworkWebSearchEnabled": true,
+    "localAgentModeTrustedFolders": []
+  },
+  "mcpServers": {
+    "asana-ztor": {
+      "command": "npx",
+      "args": ["-y", "@roychri/mcp-server-asana"],
+      "env": {
+        "ASANA_ACCESS_TOKEN": "<YOUR_ASANA_ZTOR_TOKEN>"
+      }
+    },
+    "asana-beamco": {
+      "command": "npx",
+      "args": ["-y", "@roychri/mcp-server-asana"],
+      "env": {
+        "ASANA_ACCESS_TOKEN": "<YOUR_ASANA_BEAMCO_TOKEN>"
+      }
+    }
+  }
+}

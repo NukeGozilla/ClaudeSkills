@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npm test *)",
+      "Bash(npm install *)",
+      "Bash(git status)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git commit *)",
+      "Bash(git checkout *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(find *)",
+      "Bash(env)",
+      "Bash(* --version)",
+      "Bash(* --help *)",
+      "Bash(ssh macmini *)",
+      "Bash(ssh ethanwalker@100.112.198.32 *)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(git push --force *)"
+    ],
+    "additionalDirectories": [
+      "/tmp"
+    ]
+  },
+  "effortLevel": "medium"
+}
