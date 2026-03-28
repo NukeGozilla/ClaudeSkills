@@ -1,6 +1,5 @@
 {
   "permissions": {
-    "defaultMode": "acceptEdits",
     "allow": [
       "Bash(npm run *)",
       "Bash(npm test *)",
@@ -17,12 +16,16 @@
       "Bash(* --version)",
       "Bash(* --help *)",
       "Bash(ssh macmini *)",
-      "Bash(ssh ethanwalker@100.112.198.32 *)"
+      "Bash(ssh ethanwalker@100.112.198.32 *)",
+      "Bash(chmod +x sync.sh)",
+      "Bash(git add:*)",
+      "Bash(git push:*)"
     ],
     "deny": [
       "Bash(rm -rf *)",
       "Bash(git push --force *)"
     ],
+    "defaultMode": "acceptEdits",
     "additionalDirectories": [
       "/tmp"
     ]
