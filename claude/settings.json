@@ -19,7 +19,8 @@
       "Bash(ssh ethanwalker@100.112.198.32 *)",
       "Bash(chmod +x sync.sh)",
       "Bash(git add:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(./sync.sh)"
     ],
     "deny": [
       "Bash(rm -rf *)",
