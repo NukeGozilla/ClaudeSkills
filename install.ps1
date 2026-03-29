@@ -142,7 +142,7 @@ function Install-DirLink {
 
         if ($extraFiles) {
             Write-Host ""
-            Write-Host "=== $Label: Local has files not in repo ==="
+            Write-Host "=== ${Label}: Local has files not in repo ==="
             $extraFiles | ForEach-Object { Write-Host "  + $($_.Name)" }
             Write-Host ""
             Write-Host "Choose:"
