@@ -33,7 +33,11 @@ Edit (or create) `~/.claude/settings.json`:
       "Bash(* --version)",
       "Bash(* --help *)",
       "Bash(ssh macmini *)",
-      "Bash(ssh ethanwalker@100.112.198.32 *)"
+      "Bash(ssh ethanwalker@100.112.198.32 *)",
+      "Bash(chmod +x sync.sh)",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(./sync.sh)"
     ],
     "deny": [
       "Bash(rm -rf *)",
@@ -43,7 +47,11 @@ Edit (or create) `~/.claude/settings.json`:
       "/tmp"
     ]
   },
-  "effortLevel": "medium"
+  "effortLevel": "medium",
+  "autoUpdatesChannel": "latest",
+  "enabledPlugins": {
+    "figma@claude-plugins-official": true
+  }
 }
 ```
 
