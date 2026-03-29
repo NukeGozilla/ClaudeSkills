@@ -19,7 +19,7 @@ description: >
 | `notion-sports` | Notion | Sports | `@notionhq/notion-mcp-server` | `NOTION_SPORTS_TOKEN` |
 | `linear` | Linear | (single) | HTTP endpoint | OAuth (no token) |
 
-**Token storage:** All tokens are stored in the user's keychain manager. Config files reference them via `${ENV_VAR}` syntax — never store plain text tokens in configs.
+**Token storage:** Tokens are exported as environment variables in the shell profile. MCP config files reference them via `${ENV_VAR}` syntax — never store plain text tokens in MCP configs.
 
 ---
 
@@ -71,24 +71,54 @@ When a user shares a URL, use these patterns to pick the right MCP tools:
 
 ### Prerequisites
 - Node.js installed (for `npx`)
-- Tokens stored in keychain and exported as environment variables
+- Tokens exported as environment variables in shell profile
 
-### Step 1: Set environment variables
+### Step 1: Generate tokens
 
-The user must have these env vars available in their shell (e.g. via keychain, `.zshrc`, or secret manager):
+- Asana: https://app.asana.com/0/my-apps (create a PAT for each workspace)
+- Notion: https://www.notion.so/my-integrations (create an integration for each workspace)
 
+### Step 2: Set environment variables
+
+#### macOS / Linux (`~/.zshrc` or `~/.bashrc`)
+
+```bash
+# Add to ~/.zshrc (or ~/.bashrc)
+cat >> ~/.zshrc << 'EOF'
+
+# === MCP Service Tokens ===
+export ASANA_ZTOR_PAT="<ztor asana pat>"
+export ASANA_BEAMCO_PAT="<beamco asana pat>"
+export NOTION_PERSONAL_TOKEN="<personal notion integration token>"
+export NOTION_SPORTS_TOKEN="<sports notion integration token>"
+EOF
+
+# Reload
+source ~/.zshrc
 ```
-ASANA_ZTOR_PAT=<ztor asana pat>
-ASANA_BEAMCO_PAT=<beamco asana pat>
-NOTION_PERSONAL_TOKEN=<personal notion integration token>
-NOTION_SPORTS_TOKEN=<sports notion integration token>
+
+#### Windows (PowerShell `$PROFILE`)
+
+```powershell
+# Create profile if it doesn't exist
+if (!(Test-Path $PROFILE)) { New-Item -Path $PROFILE -ItemType File -Force }
+
+# Open and add tokens
+notepad $PROFILE
+
+# Add these lines:
+$env:ASANA_ZTOR_PAT = "<ztor asana pat>"
+$env:ASANA_BEAMCO_PAT = "<beamco asana pat>"
+$env:NOTION_PERSONAL_TOKEN = "<personal notion integration token>"
+$env:NOTION_SPORTS_TOKEN = "<sports notion integration token>"
+
+# Reload
+. $PROFILE
 ```
 
-PATs are generated at:
-- Asana: https://app.asana.com/0/my-apps
-- Notion: https://www.notion.so/my-integrations
+This works for standalone PowerShell, VS Code integrated terminal, and Windows Terminal — they all load `$PROFILE` on startup.
 
-### Step 2: Configure Claude Code
+### Step 3: Configure Claude Code
 
 ```bash
 # Asana
@@ -105,7 +135,7 @@ claude mcp add -s user -t http linear https://mcp.linear.app/mcp
 
 Verify: `claude mcp list`
 
-### Step 3: Configure Claude Desktop
+### Step 4: Configure Claude Desktop
 
 Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) under `mcpServers`:
 
@@ -142,7 +172,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 
 Merge with existing config if `preferences` or other keys already exist.
 
-### Step 4: Restart
+### Step 5: Restart
 
 - Claude Code: restart the session or reload the IDE window
 - Claude Desktop: quit and reopen the app
@@ -151,10 +181,16 @@ Merge with existing config if `preferences` or other keys already exist.
 
 ## Troubleshooting
 
+### "Unauthorized" on all calls
+The token env var is missing or expired.
+1. Check: `echo $ASANA_ZTOR_PAT` (or the relevant var) — if empty, the var isn't set
+2. Verify it's in your shell profile (`~/.zshrc` on Mac, `$PROFILE` on Windows)
+3. If the var is set but still unauthorized, the token itself is expired — regenerate it
+
 ### "You do not have access to this task/project"
 1. Identify which workspace the URL belongs to (see URL Routing Guide above)
 2. Use the corresponding MCP tools
-3. If both fail, the token may have expired — regenerate and update keychain
+3. If both fail, the token may have expired — regenerate and update shell profile
 
 ### MCP server not appearing after setup
 - Claude Code: run `claude mcp list` to verify
@@ -165,7 +201,7 @@ Merge with existing config if `preferences` or other keys already exist.
 ### Token expired
 - Asana: regenerate at https://app.asana.com/0/my-apps
 - Notion: regenerate at https://www.notion.so/my-integrations
-- Update the value in your keychain manager
+- Update the value in your shell profile (`~/.zshrc` or PowerShell `$PROFILE`)
 
 ### Linear OAuth prompt
 Linear uses OAuth — the first time you use it, you'll be prompted to authorize in the browser. No token management needed.
@@ -174,10 +210,19 @@ Linear uses OAuth — the first time you use it, you'll be prompted to authorize
 
 ## New Machine Checklist
 
+### macOS / Linux
 1. Clone ClaudeSkills repo and run `install.sh` (symlinks commands/)
-2. Set up keychain with all 4 tokens (2 Asana + 2 Notion)
-3. Export env vars in shell profile
-4. Run the Claude Code commands from Step 2 above
+2. Add all 4 token exports to `~/.zshrc` (see Step 2 above)
+3. `source ~/.zshrc`
+4. Run the Claude Code commands from Step 3 above
 5. Copy Desktop config from `claude-desktop/claude_desktop_config.json.example`
 6. Restart Claude Code and Claude Desktop
 7. Test each connection
+
+### Windows
+1. Clone ClaudeSkills repo
+2. Add all 4 token exports to PowerShell `$PROFILE` (see Step 2 above)
+3. `. $PROFILE`
+4. Run the Claude Code commands from Step 3 above
+5. Restart Claude Code
+6. Test each connection
