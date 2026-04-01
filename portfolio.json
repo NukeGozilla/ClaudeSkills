@@ -1,0 +1,13 @@
+{
+  "last_updated": "2026-03-31",
+  "holdings": [],
+  "cash": {
+    "USD": 0,
+    "HKD": 0
+  },
+  "investment_profile": {
+    "style": "long-term buy-and-hold",
+    "risk_tolerance": "moderate",
+    "notes": "Add your holdings above to get started. Example entry: { \"ticker\": \"AAPL\", \"name\": \"Apple Inc.\", \"type\": \"stock\", \"market\": \"US\", \"quantity\": 50, \"avg_cost\": 145.00, \"currency\": \"USD\", \"notes\": \"\" }"
+  }
+}
