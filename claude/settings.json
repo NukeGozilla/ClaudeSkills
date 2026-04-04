@@ -31,5 +31,16 @@
       "/tmp"
     ]
   },
-  "effortLevel": "medium"
+  "extraKnownMarketplaces": {
+    "vercel-vercel-plugin": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/jeffyang/.cache/plugins/github.com-vercel-vercel-plugin"
+      }
+    }
+  },
+  "effortLevel": "medium",
+  "enabledPlugins": {
+    "vercel-plugin@vercel-vercel-plugin": true
+  }
 }
