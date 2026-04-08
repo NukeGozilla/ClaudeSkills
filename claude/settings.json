@@ -20,7 +20,10 @@
       "Bash(chmod +x sync.sh)",
       "Bash(git add:*)",
       "Bash(git push:*)",
-      "Bash(./sync.sh)"
+      "Bash(./sync.sh)",
+      "Bash(claude --continue --fork-session)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(.venv/bin/stocks-enhancer server:*)"
     ],
     "deny": [
       "Bash(rm -rf *)",
@@ -31,6 +34,9 @@
       "/tmp"
     ]
   },
+  "enabledPlugins": {
+    "vercel-plugin@vercel-vercel-plugin": true
+  },
   "extraKnownMarketplaces": {
     "vercel-vercel-plugin": {
       "source": {
@@ -39,8 +45,5 @@
       }
     }
   },
-  "effortLevel": "medium",
-  "enabledPlugins": {
-    "vercel-plugin@vercel-vercel-plugin": true
-  }
+  "effortLevel": "medium"
 }
