@@ -26,23 +26,55 @@ There are three modes of testing, and you can mix them in a single session:
 
 The user might give you a specific URL, a list of endpoints, a test plan document, or just say "test the login flow." Adapt accordingly.
 
-## Before you start testing
+---
 
-### Clarify scope
+## Step 0 — Pre-flight questionnaire (ALWAYS do this first)
 
-If the user hasn't specified, ask:
-- What URL(s) or endpoint(s) to test
-- Which flows or features matter most (login, checkout, CRUD operations, etc.)
-- Whether to focus on UI, API, or both
-- Where to file bugs — **Asana** or **Linear** — and which project/team
+**Before writing a single test or opening a browser, ask ALL of the following questions in one message.** Do not skip any. Do not start testing until you have answers. These questions surface information that cannot be inferred from the UI alone.
 
-If the user says "just explore" or gives a broad instruction, start by navigating to the root URL, taking a screenshot, and mapping out the main navigation and features. Then systematically work through them.
+```
+Before I start testing, I need a few quick answers:
 
-### Understand what "working" means
+1. **Priority flows** — What are the 2-3 most important things for me to test?
+   e.g. "the AI analysis run", "the RSS sync", "the login + dashboard load"
 
-Before testing any feature, form a mental model of what correct behavior looks like. If you're testing a login form, "working" means: the form accepts valid credentials, shows an appropriate error for invalid ones, redirects to the right place on success, and doesn't break on edge cases like empty fields or special characters. Spell out your expectations before you start clicking — this makes your bug reports much more useful because you can clearly state "expected X, got Y."
+2. **Async operations** — Are there any features that trigger background work and
+   take more than a few seconds to complete? For each one, tell me:
+   - How to trigger it (which button/endpoint)
+   - How long it typically takes
+   - What the success state looks like (e.g. "results appear in the panel",
+     "button resets to 'Sync RSS'", "confidence shows between 0–100%")
 
-## UI/E2E Testing
+3. **Data contracts** — Are there any values in the UI or API responses that
+   have a known valid range or format? e.g. "confidence should be 0–100%",
+   "price should be a positive number", "status should be one of buy/hold/sell"
+
+4. **Recent changes** — What was changed or deployed most recently? I'll focus
+   regression testing there first.
+
+5. **Known issues to skip** — Are there any known broken things I should
+   ignore so I don't waste time filing duplicates?
+
+6. **Bug destination** — Where should I file bugs: Asana or Linear? Which
+   project/team?
+```
+
+Only proceed once the user has answered. If they say "just explore" or skip some answers, that's fine — use what they gave you and note what you're assuming.
+
+---
+
+## Step 1 — Map the app before diving in
+
+Navigate to the root URL, take a screenshot, and build a mental map:
+- What are the main navigation sections?
+- What are the primary user flows?
+- Are there any tabs, modals, drawers, or states that require interaction to reveal?
+
+List this map back to the user before starting — it confirms you understand the scope.
+
+---
+
+## Step 2 — UI/E2E Testing
 
 Use the Claude in Chrome browser tools. The general flow:
 
@@ -63,6 +95,13 @@ Use the Claude in Chrome browser tools. The general flow:
 - **Console errors**: use `read_console_messages` to check for JavaScript errors
 - **Network failures**: use `read_network_requests` to spot failed API calls (4xx/5xx responses)
 
+### UI state completeness
+
+For any component with multiple tabs, modes, or toggle states:
+- **Click through every tab/state** — don't just test the default view
+- Check that controls show/hide correctly per state (e.g. a "Built-in" tab should hide "Hedge Fund" controls and vice versa)
+- Check that switching state doesn't leave orphaned UI elements from the previous state
+
 ### Tips for effective browser testing
 
 - Always take a screenshot after every significant action so you can see what happened
@@ -71,7 +110,38 @@ Use the Claude in Chrome browser tools. The general flow:
 - Fill forms field by field, verifying each one
 - Check the browser console for errors after each major interaction — JS errors often reveal bugs the UI hides
 
-## API Testing
+---
+
+## Step 3 — Async & Dynamic Operation Testing
+
+This is the most commonly missed class of bugs. Any feature that triggers background work (AI analysis, data sync, report generation, file upload, etc.) requires a dedicated protocol — **do not skip this even if the user didn't mention it.**
+
+### Protocol for each async operation
+
+1. **Identify the trigger** — find the button, form, or API call that starts the operation
+2. **Set a baseline** — take a screenshot of the "before" state; note any indicator elements (buttons, progress bars, status text)
+3. **Trigger it** — click the button or call the endpoint
+4. **Watch for the in-progress state** — does a spinner appear? Does the button disable? Does status text change? Screenshot this.
+5. **Wait for completion** — use the timeout the user gave you in pre-flight; if they didn't specify, wait up to 90 seconds for AI/LLM operations, 15 seconds for sync/fetch operations
+6. **Verify completion** — take a screenshot; check:
+   - Did the in-progress state clear? (spinner gone, button re-enabled, status text updated)
+   - Did the result appear? (new data, success message, updated list)
+   - Is there any error message visible anywhere on the page?
+7. **Validate the result data** — using the data contracts from pre-flight, check that values are in valid ranges
+8. **Check for silent failures** — a silent failure is when the UI looks like success but the data is wrong or the state never changed. Signs: button stays disabled, value shows 0 or a suspiciously round number, "last updated" timestamp didn't change
+
+### Silent failure checklist
+
+After any async operation completes (or appears to complete):
+- [ ] Button/trigger returned to its original enabled state (not stuck disabled)
+- [ ] Status/timestamp updated (not showing a stale value)
+- [ ] Result data is in valid range (not 0%, not 9999%, not null)
+- [ ] No "Internal Server Error", "undefined", or empty states where content should be
+- [ ] Network tab shows no 4xx/5xx responses from the triggered operation
+
+---
+
+## Step 4 — API Testing
 
 Use bash with `curl` to test API endpoints. For each endpoint:
 
@@ -86,17 +156,33 @@ curl -s -w "\n%{http_code} %{time_total}s" -X GET "https://api.example.com/endpo
 
 - **Status codes**: Is it returning the right code? (200 for success, 201 for creation, 404 for not found, etc.)
 - **Response body**: Does the data make sense? Are required fields present? Are types correct?
+- **Data contracts**: For every numeric field with a known valid range (from pre-flight), assert it: e.g. `jq '.confidence | if . >= 0 and . <= 1 then "OK" else "OUT OF RANGE: \(.)" end'`
 - **Response time**: Flag anything taking more than a few seconds
 - **Error responses**: Do error messages make sense? Is sensitive info leaking in error details?
 - **Auth**: Do protected endpoints reject unauthenticated requests? Do they return 401/403 appropriately?
 - **Input validation**: What happens with missing required fields, wrong types, empty strings, extremely long values?
 - **CRUD consistency**: If you create something via POST, can you GET it back? If you update it, does the GET reflect the change?
 
+### Data contract validation pattern
+
+For any numeric field where the user gave you a valid range in pre-flight:
+```bash
+# Example: confidence should be 0.0–1.0
+VALUE=$(curl -s ... | jq '.confidence')
+if python3 -c "v=$VALUE; assert 0 <= v <= 1, f'confidence {v} out of range'"; then
+  echo "PASS: confidence=$VALUE"
+else
+  echo "FAIL: confidence=$VALUE is out of expected range 0.0–1.0"
+fi
+```
+
 ### Organize your API tests
 
 Group tests by resource/feature. For each endpoint, test the happy path first, then edge cases. Keep a running tally of passes and failures.
 
-## Manual Test Plans
+---
+
+## Step 5 — Manual Test Plans
 
 When the user wants a test plan rather than (or in addition to) automated testing, generate structured test cases:
 
@@ -106,8 +192,11 @@ For each test case, include:
 - **Scenario**: What you're testing in plain language
 - **Prerequisites**: Any setup needed (logged in, specific data exists, etc.)
 - **Steps**: Numbered steps to execute
-- **Expected Result**: What should happen
+- **Expected Result**: What should happen — be specific about data ranges and state changes
+- **Async timeout**: If the step triggers background work, specify how long to wait before checking
 - **Priority**: High / Medium / Low
+
+---
 
 ## Severity ratings
 
@@ -117,6 +206,8 @@ When you find a bug, classify it:
 - **Major**: Feature partially broken, significant UX issue, incorrect data displayed, broken workflow that has a workaround
 - **Minor**: Cosmetic issues, typos, minor UI inconsistencies, non-blocking edge cases
 - **Low**: Suggestions, minor improvements, "nice to have" fixes
+
+---
 
 ## Filing bug tickets
 
@@ -136,14 +227,14 @@ Every bug ticket should include:
 ## Steps to Reproduce
 1. Navigate to [URL]
 2. [Action]
-3. [Action]
+3. [Action — if async: wait N seconds]
 4. Observe: [what actually happens]
 
 ## Expected Behavior
-[What should have happened]
+[What should have happened — include expected data ranges if relevant]
 
 ## Actual Behavior
-[What actually happened]
+[What actually happened — include actual values seen]
 
 ## Severity
 [Critical / Major / Minor / Low]
@@ -175,12 +266,15 @@ When you capture a screenshot during testing that shows a bug:
 2. For Linear: read the saved file, base64-encode it, and attach it to the issue
 3. For Asana: note the screenshot in the ticket description (Asana's attachment workflow is more limited)
 
+---
+
 ## Reporting summary
 
 After all testing is complete and tickets are filed, give the user a summary:
 - Total issues found, broken down by severity
 - Links to the tickets you created
 - Any areas that looked solid and passed testing
+- What async operations were tested and their results
 - Recommendations for what to test next or areas that need deeper attention
 
 Keep the summary concise — the detail lives in the tickets.
