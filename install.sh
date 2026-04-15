@@ -42,6 +42,18 @@ symlink_item "$REPO_DIR/claude/CLAUDE.md"     "$CLAUDE_DIR/CLAUDE.md"     "CLAUD
 symlink_item "$REPO_DIR/claude/settings.json"  "$CLAUDE_DIR/settings.json" "settings.json"
 symlink_item "$REPO_DIR/claude/commands"        "$CLAUDE_DIR/commands"      "commands/"
 
+# Cowork / Claude Desktop skills (folder-based SKILL.md format)
+if [ -d "$REPO_DIR/skills" ]; then
+    mkdir -p "$CLAUDE_DIR/skills"
+    for skill_dir in "$REPO_DIR/skills"/*/; do
+        [ -d "$skill_dir" ] || continue
+        skill_name=$(basename "$skill_dir")
+        symlink_item "$skill_dir" "$CLAUDE_DIR/skills/$skill_name" "skills/$skill_name/"
+    done
+else
+    echo "[info]   No skills/ folder found — skipping Cowork skills"
+fi
+
 echo ""
 if [ -d "$BACKUP_DIR" ]; then
     echo "Done. Backups saved to: $BACKUP_DIR"

@@ -200,6 +200,23 @@ Install-FileLink -Source "$RepoDir\claude\CLAUDE.md"     -Destination "$ClaudeDi
 Install-FileLink -Source "$RepoDir\claude\settings.json"  -Destination "$ClaudeDir\settings.json" -Label "settings.json" -DevMode $devMode
 Install-DirLink  -Source "$RepoDir\claude\commands"        -Destination "$ClaudeDir\commands"      -Label "commands/"
 
+# Cowork / Claude Desktop skills (folder-based SKILL.md format)
+if (Test-Path "$RepoDir\skills") {
+    $skillFolders = Get-ChildItem "$RepoDir\skills" -Directory
+    foreach ($skill in $skillFolders) {
+        $skillDest = "$ClaudeDir\skills\$($skill.Name)"
+        if (-not (Test-Path "$ClaudeDir\skills")) {
+            New-Item -ItemType Directory -Path "$ClaudeDir\skills" -Force | Out-Null
+        }
+        Install-DirLink -Source $skill.FullName -Destination $skillDest -Label "skills/$($skill.Name)/"
+    }
+    if ($skillFolders.Count -eq 0) {
+        Write-Host "[info]   No skills found in skills/ folder"
+    }
+} else {
+    Write-Host "[info]   No skills/ folder found - skipping Cowork skills"
+}
+
 Write-Host ""
 if ($BackupCreated) {
     Write-Host "Done. Backups saved to: $BackupDir"
