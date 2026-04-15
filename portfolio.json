@@ -1,13 +1,412 @@
 {
-  "last_updated": "2026-03-31",
-  "holdings": [],
+  "last_updated": "2026-04-13",
+  "total_value_usd": 253691.38,
+  "notes": "Approximate values based on % weights from portfolio snapshot. Update quantities and avg_cost fields when exact data is available.",
+
+  "holdings": [
+    {
+      "ticker": "GOOGL",
+      "name": "Alphabet Inc. (Class A)",
+      "type": "stock",
+      "market": "US",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 25445,
+      "weight_pct": 10.03,
+      "currency": "USD",
+      "notes": "Primary Alphabet holding. After GOOG.NE exit, trim total to ~11%."
+    },
+    {
+      "ticker": "GOOG.NE",
+      "name": "Alphabet Inc. (CAD-listed, NEO Exchange)",
+      "type": "stock",
+      "market": "CA",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 20371,
+      "weight_pct": 8.03,
+      "currency": "CAD",
+      "notes": "ACTION: EXIT — duplicate of GOOGL."
+    },
+    {
+      "ticker": "USDT",
+      "name": "Tether USD",
+      "type": "crypto",
+      "market": "crypto",
+      "quantity": null,
+      "avg_cost": 1.00,
+      "approx_value_usd": 15323,
+      "weight_pct": 6.04,
+      "currency": "USD",
+      "notes": "ACTION: TRIM to ~$5K (2%). Keep as crypto dry powder."
+    },
+    {
+      "ticker": "NVDA.NE",
+      "name": "NVIDIA Corp (CAD-listed, NEO Exchange)",
+      "type": "stock",
+      "market": "CA",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 14841,
+      "weight_pct": 5.85,
+      "currency": "CAD",
+      "notes": "ACTION: EXIT — duplicate of NVDA."
+    },
+    {
+      "ticker": "TD.TO",
+      "name": "Toronto-Dominion Bank",
+      "type": "stock",
+      "market": "CA",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 13953,
+      "weight_pct": 5.50,
+      "currency": "CAD",
+      "notes": "HOLD. ~86% gain. Core Canadian bank dividend anchor."
+    },
+    {
+      "ticker": "META.NE",
+      "name": "Meta Platforms (CAD-listed, NEO Exchange)",
+      "type": "stock",
+      "market": "CA",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 13826,
+      "weight_pct": 5.45,
+      "currency": "CAD",
+      "notes": "HOLD / add on weakness. Target 6%. AI ad optimization + Llama moat."
+    },
+    {
+      "ticker": "AMD.NE",
+      "name": "Advanced Micro Devices (CAD-listed, NEO Exchange)",
+      "type": "stock",
+      "market": "CA",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 13395,
+      "weight_pct": 5.28,
+      "currency": "CAD",
+      "notes": "ACTION: EXIT — duplicate of AMD."
+    },
+    {
+      "ticker": "AMD",
+      "name": "Advanced Micro Devices",
+      "type": "stock",
+      "market": "US",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 12253,
+      "weight_pct": 4.83,
+      "currency": "USD",
+      "notes": "HOLD post-consolidation. Target 5%. Server CPU tailwinds."
+    },
+    {
+      "ticker": "NVDA",
+      "name": "NVIDIA Corp",
+      "type": "stock",
+      "market": "US",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 5657,
+      "weight_pct": 2.23,
+      "currency": "USD",
+      "notes": "HOLD post-consolidation. Target 5%. AI capex demand durable."
+    },
+    {
+      "ticker": "AMZN.NE",
+      "name": "Amazon.com (CAD-listed, NEO Exchange)",
+      "type": "stock",
+      "market": "CA",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 5454,
+      "weight_pct": 2.15,
+      "currency": "CAD",
+      "notes": "HOLD. 22% gain. Target 3%. AWS + ad + logistics moat."
+    },
+    {
+      "ticker": "MSFT.NE",
+      "name": "Microsoft Corp (CAD-listed, NEO Exchange)",
+      "type": "stock",
+      "market": "CA",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 4034,
+      "weight_pct": 1.59,
+      "currency": "CAD",
+      "notes": "HOLD. Target 3% — build up or fold into XEQT. Azure + Copilot thesis durable."
+    },
+    {
+      "ticker": "HYG",
+      "name": "iShares iBoxx USD High Yield Corp Bond ETF",
+      "type": "bond",
+      "market": "US",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 4008,
+      "weight_pct": 1.58,
+      "currency": "USD",
+      "notes": "ACTION: EXIT. High yield adds credit risk without hedging in a drawdown. Replace with VSB.TO if bond allocation desired."
+    },
+    {
+      "ticker": "GRAB",
+      "name": "Grab Holdings Ltd",
+      "type": "stock",
+      "market": "US",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 3679,
+      "weight_pct": 1.45,
+      "currency": "USD",
+      "notes": "HOLD. -21.1%. SEA superapp moat + WeRide robotaxi optionality. Speculative position at appropriate size."
+    },
+    {
+      "ticker": "XEQT.TO",
+      "name": "iShares Core Equity ETF Portfolio",
+      "type": "etf",
+      "market": "CA",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 3095,
+      "weight_pct": 1.22,
+      "currency": "CAD",
+      "notes": "ACTION: ADD aggressively. Target 6%. Best home for CAD cash deployment — global equity, low cost, low maintenance."
+    },
+    {
+      "ticker": "BNS.TO",
+      "name": "Bank of Nova Scotia",
+      "type": "stock",
+      "market": "CA",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 1015,
+      "weight_pct": 0.40,
+      "currency": "CAD",
+      "notes": "ACTION: ADD to 2%. Too small standalone — build to earn real dividend income or fold into TD."
+    },
+    {
+      "ticker": "DIS",
+      "name": "Walt Disney Co",
+      "type": "stock",
+      "market": "US",
+      "quantity": 1,
+      "avg_cost": null,
+      "approx_value_usd": 101,
+      "weight_pct": 0.04,
+      "currency": "USD",
+      "notes": "ACTION: EXIT. 1 share at -35%. Commit 30-50 shares or close."
+    },
+    {
+      "ticker": "LCID",
+      "name": "Lucid Group Inc",
+      "type": "stock",
+      "market": "US",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 76,
+      "weight_pct": 0.03,
+      "currency": "USD",
+      "notes": "ACTION: EXIT immediately. -97.6%. Tax loss harvest. No recovery thesis."
+    },
+    {
+      "ticker": "HMMJ.TO",
+      "name": "Horizons Marijuana Life Sciences ETF",
+      "type": "etf",
+      "market": "CA",
+      "quantity": null,
+      "avg_cost": null,
+      "approx_value_usd": 25,
+      "weight_pct": 0.01,
+      "currency": "CAD",
+      "notes": "ACTION: EXIT immediately. -73.7%. Tax loss harvest. Cannabis sector value trap."
+    }
+  ],
+
   "cash": {
     "USD": 0,
-    "HKD": 0
+    "CAD": 97184,
+    "notes": "ACTION: Deploy ~$50-60K CAD. Target: ~$25K into XEQT.TO, ~$15K into GOOGL/META/AMZN on weakness, ~$20K into GLD or commodity ETF. Retain ~$30-40K CAD as reserve."
   },
+
   "investment_profile": {
     "style": "long-term buy-and-hold",
     "risk_tolerance": "moderate",
-    "notes": "Add your holdings above to get started. Example entry: { \"ticker\": \"AAPL\", \"name\": \"Apple Inc.\", \"type\": \"stock\", \"market\": \"US\", \"quantity\": 50, \"avg_cost\": 145.00, \"currency\": \"USD\", \"notes\": \"\" }"
+    "notes": "Quality compounders with wide moats. Avoid speculative >2%. Tax-loss harvest dead positions promptly. Prioritize structural cleanup over timing."
+  },
+
+  "current_allocation": {
+    "equity": 54.1,
+    "crypto": 6.0,
+    "cash": 38.3,
+    "bond": 1.6,
+    "commodity": 0.0
+  },
+
+  "recommended_allocation": {
+    "equity": 68.0,
+    "crypto": 2.0,
+    "cash": 20.0,
+    "bond": 2.0,
+    "commodity": 8.0
+  },
+
+  "summary": "This portfolio holds strong underlying names — GOOGL, AMD, NVDA, META, MSFT, AMZN — but is structurally inefficient in three major ways. Over 44% of the portfolio is sitting idle in CAD cash and USDT stablecoins, silently eroding real returns through opportunity cost. Three core positions (Alphabet, AMD, NVIDIA) are held in duplicate across USD and CAD listings, creating the illusion of diversification while doubling currency overhead and settlement complexity. The priority is to consolidate dual listings, harvest tax losses on dead positions (LCID, HMMJ), and systematically deploy the cash overhang into quality equity and a commodity hedge.",
+
+  "overall_grade": "Needs Attention",
+
+  "rebalance_actions": [
+    {
+      "action": "exit",
+      "symbol": "GOOG.NE",
+      "current_weight_pct": 8.03,
+      "target_weight_pct": 0.0,
+      "reason": "Duplicate exposure to Alphabet already held via GOOGL in USD. Consolidating eliminates redundant currency drag. After exit, trim total GOOGL to ~10-12% of portfolio."
+    },
+    {
+      "action": "trim",
+      "symbol": "GOOGL",
+      "current_weight_pct": 10.03,
+      "target_weight_pct": 11.0,
+      "reason": "Keep as primary Alphabet holding after GOOG.NE exit. Combined 18% in one stock is too concentrated; consolidate into this listing but cap at ~11%. Alphabet's AI monetization via Search and Cloud remains underappreciated."
+    },
+    {
+      "action": "exit",
+      "symbol": "AMD.NE",
+      "current_weight_pct": 5.28,
+      "target_weight_pct": 0.0,
+      "reason": "Duplicate of AMD (USD). Consolidate into the USD listing. AMD has real upside catalysts in server CPU demand per KeyBanc; hold the thesis in one clean position."
+    },
+    {
+      "action": "hold",
+      "symbol": "AMD",
+      "current_weight_pct": 4.83,
+      "target_weight_pct": 5.0,
+      "reason": "Primary AMD position post-consolidation. Server CPU tailwinds and underpriced catalysts support a 5% allocation. Do not add beyond this until datacenter revenue trajectory clarifies."
+    },
+    {
+      "action": "exit",
+      "symbol": "NVDA.NE",
+      "current_weight_pct": 2.23,
+      "target_weight_pct": 0.0,
+      "reason": "Duplicate of NVDA (USD). Consolidate into the USD listing. No need to maintain two entries for the same underlying company."
+    },
+    {
+      "action": "hold",
+      "symbol": "NVDA",
+      "current_weight_pct": 2.23,
+      "target_weight_pct": 5.0,
+      "reason": "Primary NVIDIA holding post-consolidation. The rerating from peak multiples is largely complete; AI capex spending supports continued demand. Modest add appropriate after consolidating NVDA.NE proceeds."
+    },
+    {
+      "action": "exit",
+      "symbol": "LCID",
+      "current_weight_pct": 0.03,
+      "target_weight_pct": 0.0,
+      "reason": "Down 97.6% from cost basis. Q1 deliveries fell sequentially. No credible recovery thesis at this size. Exit immediately for tax-loss harvesting and close the psychological drag."
+    },
+    {
+      "action": "exit",
+      "symbol": "HMMJ.TO",
+      "current_weight_pct": 0.01,
+      "target_weight_pct": 0.0,
+      "reason": "Down 73.7%. Cannabis sector has been a persistent value trap. Position is $14 — harvest the tax loss and close."
+    },
+    {
+      "action": "trim",
+      "symbol": "USDT",
+      "current_weight_pct": 6.04,
+      "target_weight_pct": 2.0,
+      "reason": "USDT is cash with extra steps. Retain ~$5K as crypto dry-powder for opportunistic BTC/ETH entries. Redeploy the remainder into equity or commodity positions."
+    },
+    {
+      "action": "add",
+      "symbol": "XEQT.TO",
+      "current_weight_pct": 1.22,
+      "target_weight_pct": 6.0,
+      "reason": "Global equity ETF ideal for a buy-and-hold core. Deploy CAD cash here systematically. Low cost, broad diversification across Canada, US, international, and EM — a natural home for idle cash."
+    },
+    {
+      "action": "hold",
+      "symbol": "META.NE",
+      "current_weight_pct": 5.45,
+      "target_weight_pct": 6.0,
+      "reason": "Meta has found its AI footing — advertising optimization and Llama model adoption are compounding moats. Slight loss from cost basis is a buying opportunity. Hold and consider a modest add on weakness."
+    },
+    {
+      "action": "hold",
+      "symbol": "TD.TO",
+      "current_weight_pct": 5.5,
+      "target_weight_pct": 5.0,
+      "reason": "86% gain from cost. Solid Canadian bank with reliable dividend. Hold as a defensive anchor. No need to add at current valuations."
+    },
+    {
+      "action": "add",
+      "symbol": "BNS.TO",
+      "current_weight_pct": 0.4,
+      "target_weight_pct": 2.0,
+      "reason": "Too small to be meaningful at 0.4%. Either build to 2-3% to earn real dividend income and diversify within Canadian banks, or fold into TD.TO. Share buyback approval is a mild positive signal."
+    },
+    {
+      "action": "hold",
+      "symbol": "GRAB",
+      "current_weight_pct": 1.45,
+      "target_weight_pct": 1.5,
+      "reason": "SEA super-app with a durable local network moat. WeRide robotaxi partnership adds optionality. Small speculative position is appropriate. Do not add given macro uncertainty around EM."
+    },
+    {
+      "action": "hold",
+      "symbol": "AMZN.NE",
+      "current_weight_pct": 2.15,
+      "target_weight_pct": 3.0,
+      "reason": "AWS, advertising, and logistics moat compound well over time. 22% gain from cost. Reasonable to hold and modestly build with deployed cash."
+    },
+    {
+      "action": "hold",
+      "symbol": "MSFT.NE",
+      "current_weight_pct": 1.59,
+      "target_weight_pct": 3.0,
+      "reason": "Azure growth is durable; Copilot monetization is early innings. Either build to 3% to make it meaningful or fold into XEQT. Current size doesn't move the needle."
+    },
+    {
+      "action": "exit",
+      "symbol": "HYG",
+      "current_weight_pct": 1.58,
+      "target_weight_pct": 0.0,
+      "reason": "High-yield corporate bonds add credit risk without meaningful yield impact at this size. In a risk-off scenario, HYG correlates with equities rather than hedging them. Redeploy into short-duration government bonds or commodity hedge."
+    },
+    {
+      "action": "trim",
+      "symbol": "DIS",
+      "current_weight_pct": 0.04,
+      "target_weight_pct": 0.0,
+      "reason": "One share at -35%. Either build to 30-50 shares to make it a real position or exit. The succession plan and Paris park expansion are mild positives but Disney needs streaming acceleration to rerate. At this size, exit and redeploy."
+    }
+  ],
+
+  "risk_assessment": "The dominant risk is opportunity cost from a 44%+ cash and stablecoin overhang — at $253K total value, every month uninvested at market average returns is measurable lost compounding. Concentration risk is elevated in Alphabet (effective 18% via dual listings) and in the AI/semiconductor sector broadly (GOOGL + AMD + NVDA + META + MSFT = ~35% of equity), meaning a tech sector drawdown would disproportionately hit this portfolio. Currency risk is a secondary factor: the large CAD cash position provides a natural hedge against USD weakness, but this is passive rather than intentional, and the USD/CAD rate should be monitored before deploying into USD-denominated assets.",
+
+  "post_rebalance_model": {
+    "notes": "Estimated target state after full execution. Values in USD at ~$253K total.",
+    "targets": [
+      { "ticker": "GOOGL",              "target_pct": 11.0, "target_usd": 27906 },
+      { "ticker": "AMD (consolidated)",  "target_pct": 10.0, "target_usd": 25369 },
+      { "ticker": "NVDA (consolidated)", "target_pct": 8.0,  "target_usd": 20295 },
+      { "ticker": "META.NE",            "target_pct": 7.0,  "target_usd": 17758 },
+      { "ticker": "TD.TO",              "target_pct": 5.5,  "target_usd": 13953 },
+      { "ticker": "XEQT.TO",           "target_pct": 6.0,  "target_usd": 15221 },
+      { "ticker": "AMZN.NE",           "target_pct": 3.0,  "target_usd": 7611  },
+      { "ticker": "MSFT.NE",           "target_pct": 3.0,  "target_usd": 7611  },
+      { "ticker": "BNS.TO",            "target_pct": 2.0,  "target_usd": 5074  },
+      { "ticker": "GRAB",              "target_pct": 1.5,  "target_usd": 3804  },
+      { "ticker": "Commodity (GLD/HGY.TO)", "target_pct": 8.0, "target_usd": 20295 },
+      { "ticker": "USDT",              "target_pct": 2.0,  "target_usd": 5074  },
+      { "ticker": "Bond (VSB.TO)",     "target_pct": 2.0,  "target_usd": 5074  },
+      { "ticker": "Cash (CAD reserve)","target_pct": 20.0, "target_usd": 50738 }
+    ],
+    "total_equity_pct": 68.0,
+    "total_crypto_pct": 2.0,
+    "total_bond_pct": 2.0,
+    "total_commodity_pct": 8.0,
+    "total_cash_pct": 20.0
   }
 }
