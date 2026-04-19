@@ -6,3 +6,6 @@
 # OS noise
 .DS_Store
 Thumbs.db
+
+# Claude Desktop skill bundles (redundant with skills/*/ source dirs)
+*.skill

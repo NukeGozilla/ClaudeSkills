@@ -200,7 +200,7 @@ Install-FileLink -Source "$RepoDir\claude\CLAUDE.md"     -Destination "$ClaudeDi
 Install-FileLink -Source "$RepoDir\claude\settings.json"  -Destination "$ClaudeDir\settings.json" -Label "settings.json" -DevMode $devMode
 Install-DirLink  -Source "$RepoDir\claude\commands"        -Destination "$ClaudeDir\commands"      -Label "commands/"
 
-# Cowork / Claude Desktop skills (folder-based SKILL.md format)
+# Claude Code / Cowork skills (folder-based SKILL.md format) -> %USERPROFILE%\.claude\skills\
 if (Test-Path "$RepoDir\skills") {
     $skillFolders = Get-ChildItem "$RepoDir\skills" -Directory
     foreach ($skill in $skillFolders) {
@@ -214,7 +214,30 @@ if (Test-Path "$RepoDir\skills") {
         Write-Host "[info]   No skills found in skills/ folder"
     }
 } else {
-    Write-Host "[info]   No skills/ folder found - skipping Cowork skills"
+    Write-Host "[info]   No skills/ folder found - skipping Claude Code skills"
+}
+
+# Claude Desktop skills -> Desktop's skills-plugin dir (no-ops if Desktop not installed)
+$DesktopBase = "$env:APPDATA\Claude"
+$DesktopSkillsDir = "$DesktopBase\local-agent-mode-sessions\skills-plugin"
+
+if ((Test-Path $DesktopBase) -and (Test-Path "$RepoDir\skills")) {
+    if (-not (Test-Path $DesktopSkillsDir)) {
+        New-Item -ItemType Directory -Path $DesktopSkillsDir -Force | Out-Null
+    }
+    Write-Host ""
+    Write-Host "Linking skills into Claude Desktop..."
+    $desktopLinked = 0
+    foreach ($skill in (Get-ChildItem "$RepoDir\skills" -Directory)) {
+        $skillDest = "$DesktopSkillsDir\$($skill.Name)"
+        Install-DirLink -Source $skill.FullName -Destination $skillDest -Label "desktop/skills/$($skill.Name)/"
+        $desktopLinked++
+    }
+    if ($desktopLinked -gt 0) {
+        Write-Host "[note]   Restart Claude Desktop for new/changed skills to appear."
+    }
+} elseif (Test-Path "$RepoDir\skills") {
+    Write-Host "[info]   Claude Desktop not installed (no $DesktopBase) - skipping Desktop skill links"
 }
 
 Write-Host ""

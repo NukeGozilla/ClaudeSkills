@@ -4,6 +4,13 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 CLAUDE_DIR="$HOME/.claude"
 
+case "$(uname -s)" in
+    Darwin) DESKTOP_BASE="$HOME/Library/Application Support/Claude" ;;
+    Linux)  DESKTOP_BASE="$HOME/.config/Claude" ;;
+    *)      DESKTOP_BASE="" ;;
+esac
+DESKTOP_SKILLS_DIR="$DESKTOP_BASE/local-agent-mode-sessions/skills-plugin"
+
 remove_symlink() {
     local dst="$1" label="$2"
 
@@ -22,6 +29,16 @@ remove_symlink() {
     fi
 }
 
+remove_skill_symlinks() {
+    local target_dir="$1" label_prefix="$2"
+    [ -d "$target_dir" ] || return 0
+    for link in "$target_dir"/*; do
+        [ -L "$link" ] || continue
+        skill_name=$(basename "$link")
+        remove_symlink "$link" "$label_prefix/$skill_name"
+    done
+}
+
 echo "ClaudeSkills Sync — Removing symlinks"
 echo "======================================="
 echo ""
@@ -29,6 +46,12 @@ echo ""
 remove_symlink "$CLAUDE_DIR/CLAUDE.md"     "CLAUDE.md"
 remove_symlink "$CLAUDE_DIR/settings.json" "settings.json"
 remove_symlink "$CLAUDE_DIR/commands"      "commands/"
+
+remove_skill_symlinks "$CLAUDE_DIR/skills" "skills"
+
+if [ -n "$DESKTOP_BASE" ] && [ -d "$DESKTOP_SKILLS_DIR" ]; then
+    remove_skill_symlinks "$DESKTOP_SKILLS_DIR" "desktop/skills"
+fi
 
 echo ""
 
