@@ -2,6 +2,9 @@ $ErrorActionPreference = "Stop"
 
 $RepoDir = $PSScriptRoot
 $ClaudeDir = "$env:USERPROFILE\.claude"
+
+# Legacy Desktop skills-plugin dir (install.ps1 used to symlink here, but Desktop
+# never actually read from it). Cleaned up here so old links don't linger.
 $DesktopBase = "$env:APPDATA\Claude"
 $DesktopSkillsDir = "$DesktopBase\local-agent-mode-sessions\skills-plugin"
 
@@ -52,8 +55,9 @@ Remove-RepoLink -Path "$ClaudeDir\commands"      -Label "commands/"
 
 Remove-SkillLinks -TargetDir "$ClaudeDir\skills" -LabelPrefix "skills"
 
+# Clean up legacy Desktop symlinks (install.ps1 no longer creates these)
 if (Test-Path $DesktopSkillsDir) {
-    Remove-SkillLinks -TargetDir $DesktopSkillsDir -LabelPrefix "desktop/skills"
+    Remove-SkillLinks -TargetDir $DesktopSkillsDir -LabelPrefix "desktop/skills (legacy)"
 }
 
 Write-Host ""

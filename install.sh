@@ -54,30 +54,20 @@ else
     echo "[info]   No skills/ folder found — skipping Claude Code skills"
 fi
 
-# Claude Desktop skills → Desktop's skills-plugin dir (no-ops if Desktop not installed)
-case "$(uname -s)" in
-    Darwin) DESKTOP_BASE="$HOME/Library/Application Support/Claude" ;;
-    Linux)  DESKTOP_BASE="$HOME/.config/Claude" ;;
-    *)      DESKTOP_BASE="" ;;
-esac
-DESKTOP_SKILLS_DIR="$DESKTOP_BASE/local-agent-mode-sessions/skills-plugin"
-
-if [ -n "$DESKTOP_BASE" ] && [ -d "$DESKTOP_BASE" ] && [ -d "$REPO_DIR/skills" ]; then
-    mkdir -p "$DESKTOP_SKILLS_DIR"
+# Note: Claude Desktop user skills are NOT synced via filesystem.
+# Desktop reads skills from cloud-synced bundles, not from local folders.
+# To use a skill from this repo in Claude Desktop, paste its SKILL.md
+# into claude.ai → Settings → Capabilities → Skills (one-time per skill).
+if [ -d "$REPO_DIR/skills" ]; then
     echo ""
-    echo "Linking skills into Claude Desktop..."
-    desktop_linked=0
+    echo "[info]   Claude Desktop skills are upload-only — paste each SKILL.md"
+    echo "         into claude.ai → Settings → Capabilities → Skills if you"
+    echo "         want them available in Desktop. Source files:"
     for skill_dir in "$REPO_DIR/skills"/*/; do
         [ -d "$skill_dir" ] || continue
         skill_name=$(basename "$skill_dir")
-        symlink_item "$skill_dir" "$DESKTOP_SKILLS_DIR/$skill_name" "desktop/skills/$skill_name/"
-        desktop_linked=$((desktop_linked + 1))
+        echo "           - $skill_dir""SKILL.md"
     done
-    if [ "$desktop_linked" -gt 0 ]; then
-        echo "[note]   Restart Claude Desktop for new/changed skills to appear."
-    fi
-elif [ -n "$DESKTOP_BASE" ]; then
-    echo "[info]   Claude Desktop not installed (no $DESKTOP_BASE) — skipping Desktop skill links"
 fi
 
 echo ""

@@ -29,7 +29,8 @@ The Windows installer will detect existing configs and prompt you to choose when
 |------|-------------|
 | `claude/CLAUDE.md` | Global instructions for all projects |
 | `claude/settings.json` | Permissions, effort level, allowed commands |
-| `claude/commands/` | Slash commands / skills |
+| `claude/commands/` | Slash commands |
+| `skills/` | Claude **Code** skills (folder-based, symlinked into `~/.claude/skills/`) |
 
 ## What Does NOT Sync
 
@@ -37,6 +38,18 @@ The Windows installer will detect existing configs and prompt you to choose when
 - `~/.claude/plugins/` — runtime-managed marketplace data
 - `~/.claude/projects/` — session history (path-specific)
 - `claude_desktop_config.json` — contains API tokens; use the `.example` template
+- **Claude Desktop user skills** — see below
+
+## Claude Desktop Skills (manual upload)
+
+Claude Desktop reads user skills from cloud-synced bundles, not from any local folder. The repo's `skills/` folder is the **source of truth** — but to use a skill in Desktop, you must paste its `SKILL.md` into the cloud once:
+
+1. Open the skill's `SKILL.md` (e.g. `skills/figma-comments-to-tasks/SKILL.md`)
+2. Go to claude.ai → **Settings** → **Capabilities** → **Skills** → **New skill**
+3. Paste the file contents and save
+4. The skill syncs to every Claude Desktop install on your account automatically
+
+For Claude **Code**, the symlink approach is fully automatic — `./install.sh` wires up `skills/` and edits are live. Only Desktop needs the manual step.
 
 ## Quick Sync
 

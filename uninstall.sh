@@ -4,6 +4,8 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 CLAUDE_DIR="$HOME/.claude"
 
+# Legacy Desktop skills-plugin dir (install.sh used to symlink here, but Desktop
+# never actually read from it). Cleaned up here so old links don't linger.
 case "$(uname -s)" in
     Darwin) DESKTOP_BASE="$HOME/Library/Application Support/Claude" ;;
     Linux)  DESKTOP_BASE="$HOME/.config/Claude" ;;
@@ -49,8 +51,9 @@ remove_symlink "$CLAUDE_DIR/commands"      "commands/"
 
 remove_skill_symlinks "$CLAUDE_DIR/skills" "skills"
 
+# Clean up legacy Desktop symlinks (install.sh no longer creates these)
 if [ -n "$DESKTOP_BASE" ] && [ -d "$DESKTOP_SKILLS_DIR" ]; then
-    remove_skill_symlinks "$DESKTOP_SKILLS_DIR" "desktop/skills"
+    remove_skill_symlinks "$DESKTOP_SKILLS_DIR" "desktop/skills (legacy)"
 fi
 
 echo ""

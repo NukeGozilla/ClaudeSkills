@@ -217,27 +217,18 @@ if (Test-Path "$RepoDir\skills") {
     Write-Host "[info]   No skills/ folder found - skipping Claude Code skills"
 }
 
-# Claude Desktop skills -> Desktop's skills-plugin dir (no-ops if Desktop not installed)
-$DesktopBase = "$env:APPDATA\Claude"
-$DesktopSkillsDir = "$DesktopBase\local-agent-mode-sessions\skills-plugin"
-
-if ((Test-Path $DesktopBase) -and (Test-Path "$RepoDir\skills")) {
-    if (-not (Test-Path $DesktopSkillsDir)) {
-        New-Item -ItemType Directory -Path $DesktopSkillsDir -Force | Out-Null
-    }
+# Note: Claude Desktop user skills are NOT synced via filesystem.
+# Desktop reads skills from cloud-synced bundles, not from local folders.
+# To use a skill from this repo in Claude Desktop, paste its SKILL.md
+# into claude.ai -> Settings -> Capabilities -> Skills (one-time per skill).
+if (Test-Path "$RepoDir\skills") {
     Write-Host ""
-    Write-Host "Linking skills into Claude Desktop..."
-    $desktopLinked = 0
+    Write-Host "[info]   Claude Desktop skills are upload-only - paste each SKILL.md"
+    Write-Host "         into claude.ai -> Settings -> Capabilities -> Skills if you"
+    Write-Host "         want them available in Desktop. Source files:"
     foreach ($skill in (Get-ChildItem "$RepoDir\skills" -Directory)) {
-        $skillDest = "$DesktopSkillsDir\$($skill.Name)"
-        Install-DirLink -Source $skill.FullName -Destination $skillDest -Label "desktop/skills/$($skill.Name)/"
-        $desktopLinked++
+        Write-Host "           - $($skill.FullName)\SKILL.md"
     }
-    if ($desktopLinked -gt 0) {
-        Write-Host "[note]   Restart Claude Desktop for new/changed skills to appear."
-    }
-} elseif (Test-Path "$RepoDir\skills") {
-    Write-Host "[info]   Claude Desktop not installed (no $DesktopBase) - skipping Desktop skill links"
 }
 
 Write-Host ""

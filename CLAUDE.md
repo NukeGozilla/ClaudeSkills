@@ -47,3 +47,14 @@ ClaudeSkills/
 - Edit config files inside `ClaudeSkills/claude/` — the symlinks will reflect changes in `~/.claude/` automatically
 - Run `sync.sh` after making changes to push them to the remote repo
 - Do not edit files directly in `~/.claude/` if they are symlinked — changes will be lost on sync
+
+## Claude Desktop ≠ filesystem-synced
+
+This repo only syncs **Claude Code** (CLI). Claude Desktop user skills are stored in cloud-synced bundles that the app downloads from claude.ai — there is **no local folder it reads from**.
+
+To use a skill from `skills/` in Claude Desktop:
+1. Open the SKILL.md (e.g. `skills/figma-comments-to-tasks/SKILL.md`)
+2. Paste its contents into claude.ai → Settings → Capabilities → Skills (or Claude Desktop → Settings → Capabilities → Skills)
+3. Save — it syncs to all your Desktop installs automatically (no per-machine work)
+
+When you update a skill in this repo, you must **re-paste the new SKILL.md** into the UI to push the update to Desktop. Claude Code picks up edits live via the symlink; Desktop does not.
